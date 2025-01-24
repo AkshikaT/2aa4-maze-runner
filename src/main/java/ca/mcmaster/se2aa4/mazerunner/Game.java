@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 public  class Game {
     private static final Logger logger = LogManager.getLogger();
     private Maze maze;
+    private Player player;
+    private String playerPath, correctPath;
 
     public Game (String[] args) {
         startGame(args);
@@ -21,5 +23,20 @@ public  class Game {
     // Descrption: utilize the arguments to read the file and print the path and file
     public void startGame(String[] args) {
         this.maze = new Maze(args[1]);                  // read the maze & check if it exists
+        player = new Player();                          // retrieve the path from the player
+        playerPath = player.getPlayerPath();
+        correctPath = maze.getStraightMazePath();
+        checkSequence();
+    }
+
+    // Description: display whether the player's sequence is correct
+    public void checkSequence() {
+        if (correctPath.equals(playerPath)) {
+            logger.info("PASS");
+        }
+        else {
+            logger.info("FAIL");
+            logger.info("Correct path: " + correctPath);
+        }
     }
 }
