@@ -14,7 +14,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 public class Maze {
     private static final Logger logger = LogManager.getLogger();
     public String filepath;
-    private char [][] maze;
+    public char [][] maze;
     private int rows, cols;
 
     public Maze (String filepath) {                             // identifying the maze being used
@@ -50,4 +50,23 @@ public class Maze {
         logger.info("**** Computing path");
         return "FFFFF";
     }
+
+    // Description: to identify the entry point on the west side
+    public int [][] getEntryExitPoints() {
+        int entryAndExit [][] = new int[2][2];
+
+        // find a the space in the first and last column
+        for(int i = 0; i < rows; i ++) {
+            if(maze[i][0] == ' ') {
+                entryAndExit[0] = new int[]{i, 0};
+            }
+            else if(maze[i][rows - 1] == ' ') {
+                entryAndExit[0] = new int[]{i, rows - 1};
+            }
+        }
+        logger.info("Entry and Exit points" + java.util.Arrays.deepToString(entryAndExit));
+        return entryAndExit;
+    }
+
+
 }
