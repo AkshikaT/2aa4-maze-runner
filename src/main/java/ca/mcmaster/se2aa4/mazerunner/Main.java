@@ -7,7 +7,6 @@ package ca.mcmaster.se2aa4.mazerunner;
  * 
  */
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,25 +19,8 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
-        try {
-            logger.info("**** Reading the maze from file " + args[0]);
-            BufferedReader reader = new BufferedReader(new FileReader(args[1]));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.trace("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.trace("PASS ");
-                    }
-                }
-                System.out.print(System.lineSeparator());
-            }
-        } catch(Exception e) {
-            logger.error("/!\\ An error has occured /!\\");
-        }
-        logger.info("**** Computing path");
-        System.out.println("PATH NOT COMPUTED");
+        Game game = new Game(args);                             // starting a game object
         logger.info("** End of MazeRunner");
+        
     }
 }
