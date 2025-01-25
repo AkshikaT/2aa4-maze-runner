@@ -27,5 +27,6 @@ public class Player {
         logger.info("Retrieving player's path sequence.");
         System.out.println("Please enter the sequence for going through the maze from West to East: ");
         this.playerPath = input.next().toUpperCase();
+        System.out.println("");
     }
 }

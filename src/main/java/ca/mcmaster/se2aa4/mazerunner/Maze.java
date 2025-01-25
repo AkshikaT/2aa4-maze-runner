@@ -38,17 +38,14 @@ public class Maze {
             rows = mazeTextFileLines.size();
             cols = mazeTextFileLines.get(0).length();
             maze = new char[rows][cols];
-            logger.info("Maze read into 2d array successfully.");
+            for (int i = 0; i < rows; i++) {
+                maze[i] = mazeTextFileLines.get(i).toCharArray(); // Convert the string to a char array
+            }
+            logger.info("Maze read into 2d array successfully." + java.util.Arrays.deepToString(maze));
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
-    }
-
-    //Description: returns the path of the maze for the straight.maz.txt
-    public String getStraightMazePath() {
-        logger.info("**** Computing path");
-        return "FFFFF";
     }
 
     // Description: to identify the entry point on the west side
@@ -61,12 +58,11 @@ public class Maze {
                 entryAndExit[0] = new int[]{i, 0};
             }
             else if(maze[i][rows - 1] == ' ') {
-                entryAndExit[0] = new int[]{i, rows - 1};
+                entryAndExit[1] = new int[]{i, rows - 1};
             }
         }
+        logger.info("maze" + java.util.Arrays.deepToString(maze));
         logger.info("Entry and Exit points" + java.util.Arrays.deepToString(entryAndExit));
         return entryAndExit;
     }
-
-
 }
