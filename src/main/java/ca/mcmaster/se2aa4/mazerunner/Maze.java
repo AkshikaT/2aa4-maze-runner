@@ -29,19 +29,28 @@ public class Maze {
         try {
             logger.info("**** Reading the maze from file " + filepath);
             BufferedReader reader = new BufferedReader(new FileReader(filepath));
+            int maxCols = 0;                                                                    // tracking the max number of columns at it skips to the next line sometimes
             String line;
 
             ArrayList <String> mazeTextFileLines = new ArrayList<>();                           // contains the row data from the text file        
             while ((line = reader.readLine()) != null) {
+                maxCols = Math.max(maxCols, line.length());
                 mazeTextFileLines.add(line);
             }
 
             // initializing the maze w/ a 2d array
             rows = mazeTextFileLines.size();
-            cols = mazeTextFileLines.get(0).length();
+            cols = maxCols;
             maze = new char[rows][cols];
             for (int i = 0; i < rows; i++) {
-                maze[i] = mazeTextFileLines.get(i).toCharArray(); // Convert the string to a char array
+                String row = mazeTextFileLines.get(i);
+                for(int j = 0; j < cols; j ++) {
+                    if (j < row.length()) {
+                        maze[i][j] = row.charAt(j);
+                    } else {
+                        maze[i][j] = ' ';                                                           // if space missing, add a space
+                    }
+                }
             }
             logger.info("Maze read into 2d array successfully." + java.util.Arrays.deepToString(maze));
 
@@ -59,8 +68,8 @@ public class Maze {
             if(maze[i][0] == ' ') {
                 entryAndExit[0] = new int[]{i, 0};
             }
-            else if(maze[i][rows - 1] == ' ') {
-                entryAndExit[1] = new int[]{i, rows - 1};
+            if(maze[i][cols - 1] == ' ') {
+                entryAndExit[1] = new int[]{i, cols - 1};
             }
         }
         logger.info("maze" + java.util.Arrays.deepToString(maze));
