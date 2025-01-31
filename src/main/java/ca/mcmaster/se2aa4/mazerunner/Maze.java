@@ -21,7 +21,13 @@ public class Maze {
     public Maze (String filepath) {                             // identifying the maze being used
         this.filepath = filepath;
         readMaze();
-        System.out.println(getRHRpath());
+    }
+
+    public int getRows() {
+        return rows;
+    }
+    public int getCols() {
+        return cols;
     }
 
     // Description: Check if the maze exists and read it
@@ -72,7 +78,6 @@ public class Maze {
                 entryAndExit[1] = new int[]{i, cols - 1};
             }
         }
-        logger.info("maze" + java.util.Arrays.deepToString(maze));
         logger.info("Entry and Exit points" + java.util.Arrays.deepToString(entryAndExit));
         return entryAndExit;
     }
@@ -128,12 +133,12 @@ public class Maze {
 
         }
         logger.info("Generated a path w/ west entrance using RHR.");
-        System.out.println("Final coordinates for generated path: " + row + " " + col);
         return westEntrance.toString();
     }
 
     // Description: Returns a factorized path
     public String getFactorizedPath(String originalPath) {
+        
         return "";
     }
 }

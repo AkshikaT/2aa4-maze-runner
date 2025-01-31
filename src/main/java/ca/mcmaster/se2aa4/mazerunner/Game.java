@@ -55,7 +55,7 @@ public  class Game {
                 playerNewY = playerY + directionsCol[playerDirection];
 
                 // checking whether this new coordinate is valid (is there a wall present here already)
-                if(maze.maze[playerNewX][playerNewY] == '#') {
+                if(maze.maze[playerNewX][playerNewY] == '#' || playerX < maze.getRows() || playerY < maze.getCols()) {
                     logger.error("This is path is invalid.");
                     break;
                 }
@@ -70,7 +70,7 @@ public  class Game {
         }
         else {
             System.out.println("You failed :(");
-            logger.info("Correct path for tiny maze: FFFLFFFFRFFF");
+            logger.info("Correct path for tiny maze: " + maze.getRHRpath());
         }
     }
 }

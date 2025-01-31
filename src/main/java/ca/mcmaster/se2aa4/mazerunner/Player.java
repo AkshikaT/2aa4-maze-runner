@@ -26,7 +26,14 @@ public class Player {
         Scanner input = new Scanner(System.in);
         logger.info("Retrieving player's path sequence.");
         System.out.println("Please enter the sequence for going through the maze from West to East: ");
-        this.playerPath = input.next().toUpperCase();
+        this.playerPath = input.nextLine().toUpperCase();
+        String pathWithoutSpaces = "";
+        for(int i = 0; i < playerPath.length(); i ++) {
+            if(playerPath.charAt(i) != ' ') {
+                pathWithoutSpaces += playerPath.charAt(i);
+            }
+        }
+        logger.info("Player path without spaces: " + pathWithoutSpaces);
         System.out.println("");
     }
 }
