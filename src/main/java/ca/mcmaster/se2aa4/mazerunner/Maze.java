@@ -16,10 +16,12 @@ public class Maze {
     public String filepath;
     public char [][] maze;
     private int rows, cols;
+    private ArrayList<ArrayList<String>> generatedPath = new ArrayList<>();
 
     public Maze (String filepath) {                             // identifying the maze being used
         this.filepath = filepath;
         readMaze();
+        System.out.println(getRHRpath());
     }
 
     // Description: Check if the maze exists and read it
@@ -64,5 +66,65 @@ public class Maze {
         logger.info("maze" + java.util.Arrays.deepToString(maze));
         logger.info("Entry and Exit points" + java.util.Arrays.deepToString(entryAndExit));
         return entryAndExit;
+    }
+
+    // Description: Returns whether or not a spot is valid in a maze depending on the coordinates
+    public boolean spotValid(int row, int col) {
+        if (maze[row][col] == '#') {
+            return false;
+        }
+        return true;
+    }
+
+    // Description: Generate path using right hand rule w/ west wall as the default entry point
+    public String getRHRpath() {
+        int entryAndExit [][] = getEntryExitPoints();
+        ArrayList<String> westEntrance = new ArrayList<>();
+        ArrayList<String> eastEntrance = new ArrayList<>();                         // dont use for now
+        generatedPath.add(westEntrance);
+        generatedPath.add(eastEntrance);
+
+        // assuming that the west wall has the entrance, start there
+        int row = entryAndExit[0][0];
+        int col = entryAndExit[0][1];
+
+        int playerDirection = 1;                    // by default, player is facing east bc entry is at west wall
+        // index 0 - North  1 - East    2 - South   3 - West    (circular)
+        int directionsRow [] = {-1, 0, 1, 0};
+        int directionsCol [] = {0, 1, 0, -1};
+
+        while (!(row == entryAndExit[1][0] && col == entryAndExit[1][1])) {
+            // retrieving the coordinate on the right of current position
+            int directionRight = (playerDirection + 1) % 4;
+            int rightRow = row + directionsRow[directionRight];
+            int rightCol = col + directionsCol[directionRight];
+            
+            // if open turn right
+            if (spotValid(rightRow, rightCol)) {
+                playerDirection = directionRight;
+                westEntrance.add("R");
+            }
+            // checking forward spot
+            int forwardRow = row + directionsRow[playerDirection];
+            int forwardCol = col + directionsCol[playerDirection];
+            if (spotValid(forwardRow, forwardCol)){
+                row = forwardRow;
+                col = forwardCol;
+                westEntrance.add("F");
+            }
+            else{                                                   // last option to take a left
+                playerDirection = (playerDirection + 3) % 4;
+                westEntrance.add("L");
+            }
+
+        }
+        logger.info("Generated a path w/ west entrance using RHR.");
+        System.out.println("Final coordinates for generated path: " + row + " " + col);
+        return westEntrance.toString();
+    }
+
+    // Description: Returns a factorized path
+    public String getFactorizedPath(String originalPath) {
+        return "";
     }
 }

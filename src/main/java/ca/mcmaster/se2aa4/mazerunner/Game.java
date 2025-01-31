@@ -25,7 +25,7 @@ public  class Game {
         this.maze = new Maze(args[1]);                  // read the maze & check if it exists
         player = new Player();                          // retrieve the path from the player
         playerPath = player.getPlayerPath();
-        checkSequence();
+        checkSequence();                                // will also return the results
     }
 
     // Description: following the player's movements and ensuring they don't hit walls and they end up at the end of the maze
