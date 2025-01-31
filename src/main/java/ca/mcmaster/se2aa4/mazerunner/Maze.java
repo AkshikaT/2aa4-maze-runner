@@ -91,7 +91,7 @@ public class Maze {
     }
 
     // Description: Generate path using right hand rule w/ west wall as the default entry point
-    public String getRHRpath() {
+    public ArrayList <String> getRHRpath() {
         int entryAndExit [][] = getEntryExitPoints();
         ArrayList<String> westEntrance = new ArrayList<>();
         ArrayList<String> eastEntrance = new ArrayList<>();                         // dont use for now
@@ -132,13 +132,44 @@ public class Maze {
             }
 
         }
-        logger.info("Generated a path w/ west entrance using RHR.");
-        return westEntrance.toString();
+        logger.info("Generated a path w/ west entrance using RHR. ");
+        logger.info("Canonical form: " + getCanonicalString(westEntrance));
+        logger.info("Factorized form: " + getFactorizedPath(westEntrance));
+        return westEntrance;
+    }
+
+    // Description: returns the canonical form of a path
+    public String getCanonicalString(ArrayList <String> path) {
+        String canonicalPath = "";
+        for(int i = 0; i < path.size(); i ++) {
+            if(i < path.size() - 1 && path.get(i) == path.get(i + 1)) {
+                canonicalPath += path.get(i);
+            }
+            else {
+                canonicalPath += path.get(i) + " ";
+            }
+        }
+        return canonicalPath;
     }
 
     // Description: Returns a factorized path
-    public String getFactorizedPath(String originalPath) {
-        
-        return "";
+    public String getFactorizedPath(ArrayList <String> path) {
+        int count = 1;
+        String factorizedPath = "";
+        for(int i = 0; i < path.size(); i ++) {
+            if(i < path.size() - 1 && path.get(i) == path.get(i + 1)) {
+                count ++;
+            }
+            else {
+                if (count == 1) {
+                    factorizedPath += path.get(i) + " ";
+                }
+                else {
+                    factorizedPath += count + path.get(i) + " ";
+                }
+                count = 1;
+            }
+        }
+        return factorizedPath;
     }
 }

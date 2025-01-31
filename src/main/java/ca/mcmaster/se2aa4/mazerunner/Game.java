@@ -70,7 +70,7 @@ public  class Game {
         }
         else {
             System.out.println("You failed :(");
-            logger.info("Correct path for tiny maze: " + maze.getRHRpath());
+            logger.info("Correct path for tiny maze: " + maze.getFactorizedPath(maze.getRHRpath()));
         }
     }
 }
