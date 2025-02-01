@@ -56,18 +56,18 @@ public  class Game {
         }
     
         if (pathValid) {
-            System.out.println("You passed :)");
+            System.out.println("correct path");
             if (swapped) {
                 logger.info("Player swapped entry and exit. Regenerating path with east entrance.");
                 maze.getRHRpath(true); // Assume east entrance
             }
         } else {
-            System.out.println("You failed :(");
+            System.out.println("incorrect path");
             logger.info("Correct path for the tiny maze (assuming west entrance): " + maze.getFactorizedPath(maze.getRHRpath(swapped)));
         }
     }
 
-    // Description: method to validate a path
+    //Description: method to validate a path
     public boolean pathValidation(int entryX, int entryY, int exitX, int exitY, int playerDirection, int[] directionsRow, int[] directionsCol) {
         int playerX = entryX;
         int playerY = entryY;
@@ -83,15 +83,23 @@ public  class Game {
                 int playerNewX = playerX + directionsRow[playerDirection];
                 int playerNewY = playerY + directionsCol[playerDirection];
 
-                // checking whether this new coordinate is valid (is there a wall present here already)
-                if(maze.maze[playerNewX][playerNewY] == '#' || playerX >= maze.getRows() || playerY >= maze.getCols()) {
-                    logger.error("This is path is invalid.");
-                    break;
-                }
                 playerX = playerNewX;
                 playerY = playerNewY;
+                if (playerNewX < 0 || playerNewX >= maze.getRows() || playerNewY < 0 || playerNewY >= maze.getCols()) {         // check if outside maze
+                    logger.error("Invalid move: Out of bounds");
+                    return false;
+                }
+
+                if (maze.maze[playerNewX][playerNewY] == '#') {                                                                 // check if hit a wall
+                    logger.error("Invalid move: hit wall");
+                    return false;
+                }
             }
+            
         }
-        return playerX == exitX && playerY == exitY;
+        if (playerX == exitX && playerY == exitY)
+            return true;
+        else
+            return false;
     }
 }
