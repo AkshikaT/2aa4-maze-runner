@@ -91,23 +91,31 @@ public class Maze {
     }
 
     // Description: Generate path using right hand rule w/ west wall as the default entry point
-    public ArrayList <String> getRHRpath() {
+    public ArrayList <String> getRHRpath(boolean swapped) {
         int entryAndExit [][] = getEntryExitPoints();
-        ArrayList<String> westEntrance = new ArrayList<>();
-        ArrayList<String> eastEntrance = new ArrayList<>();                         // dont use for now
-        generatedPath.add(westEntrance);
-        generatedPath.add(eastEntrance);
+        ArrayList<String> path = new ArrayList<>();
 
         // assuming that the west wall has the entrance, start there
         int row = entryAndExit[0][0];
         int col = entryAndExit[0][1];
+        int exitRow = entryAndExit[1][0];
+        int exitCol = entryAndExit[1][1];
 
-        int playerDirection = 1;                    // by default, player is facing east bc entry is at west wall
+        int playerDirection = 1;
         // index 0 - North  1 - East    2 - South   3 - West    (circular)
         int directionsRow [] = {-1, 0, 1, 0};
         int directionsCol [] = {0, 1, 0, -1};
 
-        while (!(row == entryAndExit[1][0] && col == entryAndExit[1][1])) {
+        if (swapped) {
+            // Assume East wall entry
+            row = entryAndExit[1][0];
+            col = entryAndExit[1][1];
+            exitRow = entryAndExit[0][0];
+            exitCol = entryAndExit[0][1];
+            playerDirection = 3; // Facing west
+        }
+
+        while (!(row == exitRow && col == exitCol)) {
             // retrieving the coordinate on the right of current position
             int directionRight = (playerDirection + 1) % 4;
             int rightRow = row + directionsRow[directionRight];
@@ -116,7 +124,7 @@ public class Maze {
             // if open turn right
             if (spotValid(rightRow, rightCol)) {
                 playerDirection = directionRight;
-                westEntrance.add("R");
+                path.add("R");
             }
             // checking forward spot
             int forwardRow = row + directionsRow[playerDirection];
@@ -124,18 +132,18 @@ public class Maze {
             if (spotValid(forwardRow, forwardCol)){
                 row = forwardRow;
                 col = forwardCol;
-                westEntrance.add("F");
+                path.add("F");
             }
             else{                                                   // last option to take a left
                 playerDirection = (playerDirection + 3) % 4;
-                westEntrance.add("L");
+                path.add("L");
             }
 
         }
         logger.info("Generated a path w/ west entrance using RHR. ");
-        logger.info("Canonical form: " + getCanonicalString(westEntrance));
-        logger.info("Factorized form: " + getFactorizedPath(westEntrance));
-        return westEntrance;
+        logger.info("Canonical form: " + getCanonicalString(path));
+        logger.info("Factorized form: " + getFactorizedPath(path));
+        return path;
     }
 
     // Description: returns the canonical form of a path

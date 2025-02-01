@@ -30,18 +30,50 @@ public  class Game {
 
     // Description: following the player's movements and ensuring they don't hit walls and they end up at the end of the maze
     public void checkSequence() {
+        boolean swapped = false;        // default entry position is west wall
+
         int entryAndExit [][] = maze.getEntryExitPoints();
 
         // retrieving the player's default position (the entry at the west wall)
         int playerX = entryAndExit[0][0];
         int playerY = entryAndExit[0][1];
-        int playerNewX, playerNewY;
+        int exitX = entryAndExit[1][0];
+        int exitY = entryAndExit[1][1];
         int playerDirection = 1;                    // by default, player is facing east bc entry is at west wall
 
         // directions that will add or subtract from the current coordinates
         int directionsRow [] = {-1, 0, 1, 0};
         int directionsCol [] = {0, 1, 0, -1};
+        boolean pathValid = pathValidation(playerX, playerY, exitX, exitY, playerDirection, directionsRow, directionsCol);
 
+        if (!pathValid) {                   // the player might have swapped entry and exit points
+            swapped = true;
+            int tempX = playerX;
+            int tempY = playerY;
+            playerX = exitX;
+            playerY = exitY;
+            exitX = tempX;
+            exitY = tempY;
+            playerDirection = 3;        // new default
+            pathValid = pathValidation(playerX, playerY, exitX, exitY, playerDirection, directionsRow, directionsCol);
+        }
+    
+        if (pathValid) {
+            System.out.println("You passed :)");
+            if (swapped) {
+                logger.info("Player swapped entry and exit. Regenerating path with east entrance.");
+                maze.getRHRpath(true); // Assume east entrance
+            }
+        } else {
+            System.out.println("You failed :(");
+            logger.info("Correct path for the tiny maze (assuming west entrance): " + maze.getFactorizedPath(maze.getRHRpath(swapped)));
+        }
+    }
+
+    // Description: method to validate a path
+    public boolean pathValidation(int entryX, int entryY, int exitX, int exitY, int playerDirection, int[] directionsRow, int[] directionsCol) {
+        int playerX = entryX;
+        int playerY = entryY;
         for (int i = 0; i < playerPath.length(); i ++) {
             if (playerPath.charAt(i) == 'R') {
                 playerDirection = (playerDirection + 1) % 4;
@@ -51,11 +83,11 @@ public  class Game {
             }
             else if(playerPath.charAt(i) == 'F'){
                 // update the coordinates
-                playerNewX = playerX + directionsRow[playerDirection];
-                playerNewY = playerY + directionsCol[playerDirection];
+                int playerNewX = playerX + directionsRow[playerDirection];
+                int playerNewY = playerY + directionsCol[playerDirection];
 
                 // checking whether this new coordinate is valid (is there a wall present here already)
-                if(maze.maze[playerNewX][playerNewY] == '#' || playerX < maze.getRows() || playerY < maze.getCols()) {
+                if(maze.maze[playerNewX][playerNewY] == '#' || playerX >= maze.getRows() || playerY >= maze.getCols()) {
                     logger.error("This is path is invalid.");
                     break;
                 }
@@ -63,14 +95,6 @@ public  class Game {
                 playerY = playerNewY;
             }
         }
-
-        // check whether the final coordinates of the player is the exit point
-        if (playerX == entryAndExit[1][0] && playerY == entryAndExit[1][1]) {
-            System.out.println("You passed :)");
-        }
-        else {
-            System.out.println("You failed :(");
-            logger.info("Correct path for tiny maze: " + maze.getFactorizedPath(maze.getRHRpath()));
-        }
+        return playerX == exitX && playerY == exitY;
     }
 }
