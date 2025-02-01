@@ -23,6 +23,7 @@ public class Maze {
         readMaze();
     }
 
+    // Description: to return the number of rows and columns in the text file
     public int getRows() {
         return rows;
     }
@@ -146,7 +147,7 @@ public class Maze {
         return path;
     }
 
-    // Description: returns the canonical form of a path
+    // Description: returns the canonical form of a path if an arraylist is given (from generated path)
     public String getCanonicalString(ArrayList <String> path) {
         String canonicalPath = "";
         for(int i = 0; i < path.size(); i ++) {

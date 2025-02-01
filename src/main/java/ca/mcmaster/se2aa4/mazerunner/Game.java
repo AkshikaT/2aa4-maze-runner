@@ -4,9 +4,6 @@ package ca.mcmaster.se2aa4.mazerunner;
  * Description; In charge of bringing together the maze, game logic, and the player classes together to start and end the game.
  */
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
