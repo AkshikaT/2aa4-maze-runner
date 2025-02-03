@@ -27,7 +27,7 @@ public class Player {
         String strCount = "";
         int count = 1;
         for(int i = 0; i < playerPath.length(); i ++) {
-            if(Character.isDigit(playerPath.charAt(i))) {
+            if(Character.isDigit(playerPath.charAt(i))) {                   // get the coefficient number if there is one and add to count (accounting for more than one digit)
                 strCount += playerPath.charAt(i);
             }
             else if(Character.isLetter(playerPath.charAt(i))){              // bc it might be a space
@@ -39,6 +39,7 @@ public class Player {
                     canPath += playerPath.charAt(i);
                 }
                 strCount = "";
+                count = 1;
             }
         }
         playerPath = canPath;
