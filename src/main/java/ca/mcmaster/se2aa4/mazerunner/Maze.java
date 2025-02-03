@@ -14,9 +14,9 @@ package ca.mcmaster.se2aa4.mazerunner;
 public class Maze {
     private static final Logger logger = LogManager.getLogger();
     public String filepath;
-    public char [][] maze;
-    private int rows, cols;
-    private ArrayList<ArrayList<String>> generatedPath = new ArrayList<>();
+    protected char [][] maze;
+    protected int rows, cols;
+    protected ArrayList<ArrayList<String>> generatedPath = new ArrayList<>();
 
     public Maze (String filepath) {                             // identifying the maze being used
         this.filepath = filepath;
@@ -82,70 +82,6 @@ public class Maze {
         }
         // logger.info("Entry and Exit points" + java.util.Arrays.deepToString(entryAndExit));
         return entryAndExit;
-    }
-
-    // Description: Returns whether or not a spot is valid in a maze depending on the coordinates
-    public boolean spotValid(int row, int col) {
-        if (maze[row][col] == '#') {
-            return false;
-        }
-        return true;
-    }
-
-    // Description: Generate path using right hand rule w/ west wall as the default entry point
-    public ArrayList <String> getRHRpath(boolean swapped) {
-        int entryAndExit [][] = getEntryExitPoints();
-        ArrayList<String> path = new ArrayList<>();
-
-        // assuming that the west wall has the entrance, start there
-        int row = entryAndExit[0][0];
-        int col = entryAndExit[0][1];
-        int exitRow = entryAndExit[1][0];
-        int exitCol = entryAndExit[1][1];
-
-        int playerDirection = 1;
-        // index 0 - North  1 - East    2 - South   3 - West    (circular)
-        int directionsRow [] = {-1, 0, 1, 0};
-        int directionsCol [] = {0, 1, 0, -1};
-
-        if (swapped) {
-            // Assume East wall entry
-            row = entryAndExit[1][0];
-            col = entryAndExit[1][1];
-            exitRow = entryAndExit[0][0];
-            exitCol = entryAndExit[0][1];
-            playerDirection = 3; // Facing west
-        }
-
-        while (!(row == exitRow && col == exitCol)) {
-            // retrieving the coordinate on the right of current position
-            int directionRight = (playerDirection + 1) % 4;
-            int rightRow = row + directionsRow[directionRight];
-            int rightCol = col + directionsCol[directionRight];
-            
-            // if open turn right
-            if (spotValid(rightRow, rightCol)) {
-                playerDirection = directionRight;
-                path.add("R");
-            }
-            // checking forward spot
-            int forwardRow = row + directionsRow[playerDirection];
-            int forwardCol = col + directionsCol[playerDirection];
-            if (spotValid(forwardRow, forwardCol)){
-                row = forwardRow;
-                col = forwardCol;
-                path.add("F");
-            }
-            else{                                                   // last option to take a left
-                playerDirection = (playerDirection + 3) % 4;
-                path.add("L");
-            }
-
-        }
-        // logger.info("Generated a path w/ west entrance using RHR. ");
-        // logger.info("Canonical form: " + getCanonicalString(path));
-        // logger.info("Factorized form: " + getFactorizedPath(path));
-        return path;
     }
 
     // Description: returns the canonical form of a path if an arraylist is given (from generated path)

@@ -1,15 +1,16 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-
+// Description: given a path, this class validates the path the player inputted
 
 public class PathValidator {
-
     private Maze maze;
+    private PathGenerator pathGenerate;
     private Player player;
     private String playerPath = "";
 
     public PathValidator(Maze maze, String playerPath) {
         this.maze = maze;
+        this.pathGenerate = pathGenerate;
         this.playerPath = playerPath;
         checkSequence();
     }
@@ -46,7 +47,7 @@ public class PathValidator {
             System.out.println("correct path");
             if (swapped) {
                 // logger.info("Player swapped entry and exit. Regenerating path with east entrance.");
-                maze.getRHRpath(true); // Assume east entrance
+                pathGenerate.getRHRpath(true); // Assume east entrance
             }
         } else {
             System.out.println("incorrect path");

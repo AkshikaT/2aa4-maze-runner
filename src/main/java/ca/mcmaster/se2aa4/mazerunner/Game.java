@@ -12,6 +12,7 @@ public  class Game {
     private Maze maze;
     private Player player;
     private PathValidator pathValidator;
+    private PathGenerator pathGenerate;
     private String playerPath = "";
 
     public Game (String[] args) {
@@ -21,7 +22,7 @@ public  class Game {
     // Descrption: utilize the arguments to read the file and print the path and file
     public void startGame(String[] args) {
         if(args.length < 2 || !args[0].equals("-i")) {
-            System.out.println("error: wrong form of command line arguments. use -i <maze path>");
+            System.out.println("PATH NOT COMPUTED");
             return;
         }
         this.maze = new Maze(args[1]);
@@ -35,7 +36,8 @@ public  class Game {
             playerPath = player.getPlayerPath(); 
             pathValidator = new PathValidator(maze, playerPath);
         } else {                                                            // generate the actual path in factorized form naturally
-            System.out.println(maze.getFactorizedPath(maze.getRHRpath(false)));
+            pathGenerate = new PathGenerator(args[1]);
+            System.out.println(maze.getFactorizedPath(pathGenerate.getRHRpath(false)));
         }
     }
 }
