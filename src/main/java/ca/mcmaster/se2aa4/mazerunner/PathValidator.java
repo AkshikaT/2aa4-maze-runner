@@ -10,7 +10,7 @@ public class PathValidator {
 
     public PathValidator(Maze maze, String playerPath) {
         this.maze = maze;
-        this.pathGenerate = pathGenerate;
+        this.pathGenerate = new RightHandRuleGenerator(maze.filepath);
         this.playerPath = playerPath;
         checkSequence();
     }
@@ -47,7 +47,7 @@ public class PathValidator {
             System.out.println("correct path");
             if (swapped) {
                 // logger.info("Player swapped entry and exit. Regenerating path with east entrance.");
-                pathGenerate.getRHRpath(true); // Assume east entrance
+                pathGenerate.generatePath(true); // Assume east entrance
             }
         } else {
             System.out.println("incorrect path");

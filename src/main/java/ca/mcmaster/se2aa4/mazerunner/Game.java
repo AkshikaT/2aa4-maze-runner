@@ -36,8 +36,8 @@ public  class Game {
             playerPath = player.getPlayerPath(); 
             pathValidator = new PathValidator(maze, playerPath);
         } else {                                                            // generate the actual path in factorized form naturally
-            pathGenerate = new PathGenerator(args[1]);
-            System.out.println(maze.getFactorizedPath(pathGenerate.getRHRpath(false)));
+            pathGenerate = new RightHandRuleGenerator(maze.filepath);
+            System.out.println(maze.getFactorizedPath(pathGenerate.generatePath(false)));
         }
     }
 }
