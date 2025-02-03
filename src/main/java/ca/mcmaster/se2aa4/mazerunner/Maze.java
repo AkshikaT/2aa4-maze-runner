@@ -34,7 +34,7 @@ public class Maze {
     // Description: Check if the maze exists and read it
     public void readMaze() {
         try {
-            logger.info("**** Reading the maze from file " + filepath);
+            // logger.info("**** Reading the maze from file " + filepath);
             BufferedReader reader = new BufferedReader(new FileReader(filepath));
             int maxCols = 0;                                                                    // tracking the max number of columns at it skips to the next line sometimes
             String line;
@@ -59,10 +59,11 @@ public class Maze {
                     }
                 }
             }
-            logger.info("Maze read into 2d array successfully." + java.util.Arrays.deepToString(maze));
+            // logger.info("Maze read into 2d array successfully." + java.util.Arrays.deepToString(maze));
 
         } catch(Exception e) {
-            logger.error("/!\\ An error has occured /!\\");
+            System.out.print("error: failed to read the path");
+            // logger.error("/!\\ An error has occured /!\\");
         }
     }
 
@@ -79,7 +80,7 @@ public class Maze {
                 entryAndExit[1] = new int[]{i, cols - 1};
             }
         }
-        logger.info("Entry and Exit points" + java.util.Arrays.deepToString(entryAndExit));
+        // logger.info("Entry and Exit points" + java.util.Arrays.deepToString(entryAndExit));
         return entryAndExit;
     }
 
@@ -141,9 +142,9 @@ public class Maze {
             }
 
         }
-        logger.info("Generated a path w/ west entrance using RHR. ");
-        logger.info("Canonical form: " + getCanonicalString(path));
-        logger.info("Factorized form: " + getFactorizedPath(path));
+        // logger.info("Generated a path w/ west entrance using RHR. ");
+        // logger.info("Canonical form: " + getCanonicalString(path));
+        // logger.info("Factorized form: " + getFactorizedPath(path));
         return path;
     }
 

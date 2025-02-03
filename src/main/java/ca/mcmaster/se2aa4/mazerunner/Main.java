@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import java.util.ArrayList;
+
 /*
  * ASSIGNMENT 1: MAZE RUNNER
  * Name: Akshika Thiyagendran
@@ -15,9 +17,9 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-        logger.info("** Starting Maze Runner");
+        // logger.info("** Starting Maze Runner");
         Game game = new Game(args);                             // starting a game object
-        logger.info("** End of MazeRunner");
+        // logger.info("** End of MazeRunner");
         
     }
 }

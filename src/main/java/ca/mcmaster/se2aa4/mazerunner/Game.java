@@ -11,7 +11,7 @@ public  class Game {
     private static final Logger logger = LogManager.getLogger();
     private Maze maze;
     private Player player;
-    private String playerPath;
+    private String playerPath = "";
 
     public Game (String[] args) {
         startGame(args);
@@ -19,10 +19,23 @@ public  class Game {
 
     // Descrption: utilize the arguments to read the file and print the path and file
     public void startGame(String[] args) {
-        this.maze = new Maze(args[1]);                  // read the maze & check if it exists
-        player = new Player();                          // retrieve the path from the player
-        playerPath = player.getPlayerPath();
-        checkSequence();                                // will also return the results
+        if(args.length < 2 || !args[0].equals("-i")) {
+            System.out.println("error: wrong form of command line arguments. use -i <maze path>");
+            return;
+        }
+        this.maze = new Maze(args[1]);
+        if (args.length > 2 && args[2].equals("-p")) {              // validate the path the user entered
+            int i = 3;
+            while(i < args.length) {
+                playerPath += args[i];
+                i ++;
+            }
+            player = new Player(playerPath.trim());    
+            playerPath = player.getPlayerPath(); 
+            checkSequence();
+        } else {                                                            // generate the actual path in factorized form naturally
+            System.out.println(maze.getFactorizedPath(maze.getRHRpath(false)));
+        }
     }
 
     // Description: following the player's movements and ensuring they don't hit walls and they end up at the end of the maze
@@ -58,12 +71,12 @@ public  class Game {
         if (pathValid) {
             System.out.println("correct path");
             if (swapped) {
-                logger.info("Player swapped entry and exit. Regenerating path with east entrance.");
+                // logger.info("Player swapped entry and exit. Regenerating path with east entrance.");
                 maze.getRHRpath(true); // Assume east entrance
             }
         } else {
             System.out.println("incorrect path");
-            logger.info("Correct path for the tiny maze (assuming west entrance): " + maze.getFactorizedPath(maze.getRHRpath(swapped)));
+            // logger.info("Correct path for the tiny maze (assuming west entrance): " + maze.getFactorizedPath(maze.getRHRpath(swapped)));
         }
     }
 
@@ -86,12 +99,12 @@ public  class Game {
                 playerX = playerNewX;
                 playerY = playerNewY;
                 if (playerNewX < 0 || playerNewX >= maze.getRows() || playerNewY < 0 || playerNewY >= maze.getCols()) {         // check if outside maze
-                    logger.error("Invalid move: Out of bounds");
+                    // logger.error("Invalid move: Out of bounds");
                     return false;
                 }
 
                 if (maze.maze[playerNewX][playerNewY] == '#') {                                                                 // check if hit a wall
-                    logger.error("Invalid move: hit wall");
+                    // logger.error("Invalid move: hit wall");
                     return false;
                 }
             }
