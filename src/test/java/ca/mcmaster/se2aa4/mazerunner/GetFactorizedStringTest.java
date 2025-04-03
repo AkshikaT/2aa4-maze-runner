@@ -4,18 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
-public class GetCanonicalStringTest {
+public class GetFactorizedStringTest {
 
     // Description: testing the canonical string in straight maze
     @Test
-    public void getCanonicalStringTest() {
+    public void getFactorizedtringTest() {
         String filepath = "examples/straight.maz.txt";
         Maze maze = new Maze(filepath);
 
         PathGenerator pathGenerator = new RightHandRuleGenerator(filepath);
         ArrayList<String> path = pathGenerator.generatePath(false);
 
-        assertEquals("FFFF", maze.getCanonicalString(path));
+        assertEquals("4F", maze.getFactorizedPath(path));
         
     }
     

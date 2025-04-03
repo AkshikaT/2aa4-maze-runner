@@ -14,7 +14,7 @@ public abstract class PathGenerator extends Maze {
     public boolean spotValid(int row, int col) {
         if (maze[row][col] == '#') {
             return false;
-        }
+        } 
         return true;
     }
 

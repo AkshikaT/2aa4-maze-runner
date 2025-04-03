@@ -6,6 +6,7 @@ public class PathValidator {
     private Maze maze;
     private PathGenerator pathGenerate;
     private Player player;
+    protected boolean pathValid;
     private String playerPath = "";
 
     public PathValidator(Maze maze, String playerPath) {
@@ -29,7 +30,7 @@ public class PathValidator {
         // directions that will add or subtract from the current coordinates
         int directionsRow [] = {-1, 0, 1, 0};
         int directionsCol [] = {0, 1, 0, -1};
-        boolean pathValid = pathValidation(playerX, playerY, exitX, exitY, playerDirection, directionsRow, directionsCol);
+        pathValid = pathValidation(playerX, playerY, exitX, exitY, playerDirection, directionsRow, directionsCol);
 
         if (!pathValid) {                   // the player might have swapped entry and exit points
             swapped = true;

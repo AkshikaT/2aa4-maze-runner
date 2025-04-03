@@ -25,7 +25,7 @@ public class RightHandRuleGenerator extends PathGenerator{
         int playerDirection = 1;
         // index 0 - North  1 - East    2 - South   3 - West    (circular)
         int directionsRow [] = {-1, 0, 1, 0};
-        int directionsCol [] = {0, 2, 0, -2};
+        int directionsCol [] = {0, 1, 0, -1};
 
         if (swapped) {
             // Assume East wall entry
@@ -35,8 +35,8 @@ public class RightHandRuleGenerator extends PathGenerator{
             exitCol = entryAndExit[0][1];
             playerDirection = 3; // Facing west
         }
-
-        while (!(row == exitRow && col == exitCol)) {
+        while (!(row == exitRow  && col == exitCol)) {
+        
             // retrieving the coordinate on the right of current position
             int directionRight = (playerDirection + 1) % 4;
             int rightRow = row + directionsRow[directionRight];
