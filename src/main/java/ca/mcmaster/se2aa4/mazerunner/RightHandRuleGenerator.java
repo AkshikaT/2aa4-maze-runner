@@ -25,7 +25,7 @@ public class RightHandRuleGenerator extends PathGenerator{
         int playerDirection = 1;
         // index 0 - North  1 - East    2 - South   3 - West    (circular)
         int directionsRow [] = {-1, 0, 1, 0};
-        int directionsCol [] = {0, 1, 0, -1};
+        int directionsCol [] = {0, 2, 0, -2};
 
         if (swapped) {
             // Assume East wall entry
@@ -66,5 +66,5 @@ public class RightHandRuleGenerator extends PathGenerator{
         // logger.info("Factorized form: " + getFactorizedPath(path));
         return path;
     }
-
+    
 }
