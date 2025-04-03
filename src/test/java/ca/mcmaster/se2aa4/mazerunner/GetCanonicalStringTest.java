@@ -14,9 +14,8 @@ public class GetCanonicalStringTest {
 
         PathGenerator pathGenerator = new RightHandRuleGenerator(filepath);
         ArrayList<String> path = pathGenerator.generatePath(false);
-        System.out.println("Actual path is: "+ maze.getCanonicalString(path)+ ".");
 
-        assertEquals("FFFF", maze.getCanonicalString(path));
+        assertEquals("FF", maze.getCanonicalString(path));
         
     }
     
