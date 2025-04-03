@@ -95,7 +95,7 @@ public class Maze {
                 canonicalPath += path.get(i) + " ";
             }
         }
-        return canonicalPath;
+        return canonicalPath.trim();
     }
 
     // Description: Returns a factorized path
@@ -116,6 +116,6 @@ public class Maze {
                 count = 1;
             }
         }
-        return factorizedPath;
+        return factorizedPath.trim();
     }
 }
