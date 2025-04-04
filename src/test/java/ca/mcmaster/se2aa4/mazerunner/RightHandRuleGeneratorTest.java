@@ -15,7 +15,7 @@ public class RightHandRuleGeneratorTest {
         Maze maze = new Maze(filepath);
 
         PathGenerator pathGenerator = new RightHandRuleGenerator(filepath);
-        ArrayList<String> path = pathGenerator.generatePath(false);
+        ArrayList<String> path = pathGenerator.solveMaze(false);
 
         assertEquals("FF R F L F L FFFFFF R FFF R FFFFFF L F L FFFF R FFF R FFFF L F L FF R FFFF LL FFFF R FF R FFFFFFF R FFFF R FFFF LL FFFFFFF", maze.getCanonicalString(path));
 

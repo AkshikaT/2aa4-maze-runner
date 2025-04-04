@@ -12,29 +12,12 @@ public class RightHandRuleGenerator extends PathGenerator{
 
     @Override
     // Description: Generate path using right hand rule w/ west wall as the default entry point
-    public ArrayList <String> generatePath(boolean swapped) {
-        int entryAndExit [][] = getEntryExitPoints();
-        ArrayList<String> path = new ArrayList<>();
+    public ArrayList <String> generatePath() {
 
-        // assuming that the west wall has the entrance, start there
-        int row = entryAndExit[0][0];
-        int col = entryAndExit[0][1];
-        int exitRow = entryAndExit[1][0];
-        int exitCol = entryAndExit[1][1];
-
-        int playerDirection = 1;
         // index 0 - North  1 - East    2 - South   3 - West    (circular)
         int directionsRow [] = {-1, 0, 1, 0};
         int directionsCol [] = {0, 1, 0, -1};
 
-        if (swapped) {
-            // Assume East wall entry
-            row = entryAndExit[1][0];
-            col = entryAndExit[1][1];
-            exitRow = entryAndExit[0][0];
-            exitCol = entryAndExit[0][1];
-            playerDirection = 3; // Facing west
-        }
         while (!(row == exitRow  && col == exitCol)) {
         
             // retrieving the coordinate on the right of current position

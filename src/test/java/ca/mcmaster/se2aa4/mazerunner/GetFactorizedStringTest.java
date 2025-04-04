@@ -13,7 +13,7 @@ public class GetFactorizedStringTest {
         Maze maze = new Maze(filepath);
 
         PathGenerator pathGenerator = new RightHandRuleGenerator(filepath);
-        ArrayList<String> path = pathGenerator.generatePath(false);
+        ArrayList<String> path = pathGenerator.solveMaze(false);
 
         assertEquals("4F", maze.getFactorizedPath(path));
         

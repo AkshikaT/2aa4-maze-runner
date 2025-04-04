@@ -48,7 +48,7 @@ public class PathValidator {
             System.out.println("correct path");
             if (swapped) {
                 // logger.info("Player swapped entry and exit. Regenerating path with east entrance.");
-                pathGenerate.generatePath(true); // Assume east entrance
+                pathGenerate.solveMaze(true); // Assume east entrance
             }
         } else {
             System.out.println("incorrect path");
