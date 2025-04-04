@@ -5,6 +5,14 @@ import java.util.ArrayList;
 // Description: Algorithm to generate a path using right hand rule
 
 public class RightHandRuleGenerator extends PathGenerator{
+    // index 0 - North  1 - East    2 - South   3 - West    (circular)
+    protected int directionsRow [] = {-1, 0, 1, 0};
+    protected int directionsCol [] = {0, 1, 0, -1};
+
+    // all the movements possible
+    private final MovementCommand turnRight = new TurnRightCommand();
+    private final MovementCommand moveForward = new MoveForwardCommand();
+    private final MovementCommand turnLeft = new TurnLeftCommand();
 
     public RightHandRuleGenerator(String filepath) {
         super(filepath);
@@ -14,39 +22,14 @@ public class RightHandRuleGenerator extends PathGenerator{
     // Description: Generate path using right hand rule w/ west wall as the default entry point
     public ArrayList <String> generatePath() {
 
-        // index 0 - North  1 - East    2 - South   3 - West    (circular)
-        int directionsRow [] = {-1, 0, 1, 0};
-        int directionsCol [] = {0, 1, 0, -1};
-
-        while (!(row == exitRow  && col == exitCol)) {
-        
-            // retrieving the coordinate on the right of current position
-            int directionRight = (playerDirection + 1) % 4;
-            int rightRow = row + directionsRow[directionRight];
-            int rightCol = col + directionsCol[directionRight];
-            
-            // if open turn right
-            if (spotValid(rightRow, rightCol)) {
-                playerDirection = directionRight;
-                path.add("R");
+        while (!(row == exitRow && col == exitCol)) {
+            // Try movements in priority order: right, forward, left
+            boolean movement = turnRight.execute(this);
+            movement = moveForward.execute(this);
+            if (!movement) {
+                turnLeft.execute(this);
             }
-            // checking forward spot
-            int forwardRow = row + directionsRow[playerDirection];
-            int forwardCol = col + directionsCol[playerDirection];
-            if (spotValid(forwardRow, forwardCol)){
-                row = forwardRow;
-                col = forwardCol;
-                path.add("F");
-            }
-            else{                                                   // last option to take a left
-                playerDirection = (playerDirection + 3) % 4;
-                path.add("L");
-            }
-
         }
-        // logger.info("Generated a path w/ west entrance using RHR. ");
-        // logger.info("Canonical form: " + getCanonicalString(path));
-        // logger.info("Factorized form: " + getFactorizedPath(path));
         return path;
     }
     
