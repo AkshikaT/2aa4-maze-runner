@@ -1,5 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 // Description: given a path, this class validates the path the player inputted
 
 public class PathValidator {
@@ -75,12 +78,10 @@ public class PathValidator {
                 playerX = playerNewX;
                 playerY = playerNewY;
                 if (playerNewX < 0 || playerNewX >= maze.getRows() || playerNewY < 0 || playerNewY >= maze.getCols()) {         // check if outside maze
-                    // logger.error("Invalid move: Out of bounds");
                     return false;
                 }
 
                 if (maze.maze[playerNewX][playerNewY] == '#') {                                                                 // check if hit a wall
-                    // logger.error("Invalid move: hit wall");
                     return false;
                 }
             }

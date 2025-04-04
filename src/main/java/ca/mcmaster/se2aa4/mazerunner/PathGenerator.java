@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public abstract class PathGenerator extends Maze {
     protected ArrayList<String> path = new ArrayList<>();
-    protected int entryAndExit [][] = getEntryExitPoints();
-    protected static int playerDirection = 1;
+    protected int entryAndExit [][];
+    protected int playerDirection = 1;
     protected int row;
     protected int exitRow;
     protected int col;
@@ -15,12 +15,14 @@ public abstract class PathGenerator extends Maze {
 
     public PathGenerator(String filepath) {
         super(filepath);
+        entryAndExit = getEntryExitPoints();
     }
 
     public final ArrayList<String> solveMaze(boolean swapped) {
         if (swapped) {
             swapExitEntryPoints();
             playerDirection = 3;
+
         }
         row = entryAndExit[0][0];
         col = entryAndExit[0][1];
