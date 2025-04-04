@@ -79,11 +79,11 @@ public class PathValidationTest {
 
     @Test
     public void testCorrectFactorizedPathSwapped() {
-        PathGenerator pathGenerator = new RightHandRuleGenerator("examples/straight.maz.txt");
+        PathGenerator pathGenerator = new RightHandRuleGenerator("examples/test.maz.txt");
         Maze maze = new Maze(filepath);
 
         ArrayList<String> path = pathGenerator.solveMaze(true);
 
-        assertEquals("FFFF", maze.getCanonicalString(path));
+        assertEquals("FF R FFFF L FFFFFFFFFFFF R FF R FFFF LL FFFFFFFF R FF R FFFFFFFFFFF R FF L FFFFF LL FFFF R FF R FFFF LL FFFFFFFFFFFFFFFFF L FFFFFFF R FF", maze.getCanonicalString(path));
     }
 }
