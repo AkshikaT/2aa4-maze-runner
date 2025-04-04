@@ -78,9 +78,9 @@ public class PathValidationTest {
     }
 
     @Test
-    public void testCorrectFactorizedPathSwapped() {
-        ArrayList<String> path = pathGenerator.solveMaze(true);
-
-        assertEquals("FF R FFFF L FFFFFFFFFFFF R FF R FFFF LL FFFFFFFF R FF R FFFFFFFFFFF R FF L FFFFF LL FFFF R FF R FFFF LL FFFFFFFFFFFFFFFFF L FFFFFFF R FF", maze.getCanonicalString(path));
+    public void testCorrectPathSwapped() {
+        String playerPath = "FF R FFFF L FFFFFFFFFFFF R FF R FFFF LL FFFFFFFF R FF R FFFFFFFFFFF R FF L FFFFF LL FFFF R FF R FFFF LL FFFFFFFFFFFFFFFFF L FFFFFFF R FF";
+        PathValidator pathValidator = new PathValidator(maze, playerPath);
+        assertEquals(true, pathValidator.pathValid);
     }
 }
